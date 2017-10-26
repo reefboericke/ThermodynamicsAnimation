@@ -23,7 +23,7 @@ class particle {
 }
 
 function addParticle(){
-	particles.push(new Particle(50, 50, Math.floor(Math.random()*21), Math.floor(Math.random()*21))); 
+	particles.push(new particle(50, 50, Math.floor(Math.random()*21), Math.floor(Math.random()*21))); 
 }
 
 function setup() {
@@ -36,12 +36,16 @@ function draw() {
 	for (var i = 0; i < particles.length; i++) {
 		par = particles[i];
 		if(par.x >= canvas_x - 10){
+			dpxr += mass * par.dx;
 			par.dx = -par.dx;
 		} else if (par.x <= 10) {
+			dpxl += mass * par.dx;
 			par.dx = -par.dx;
 		} else if (par.y >= canvas_y - 10){
+			dpyb += mass * par.dy;
 			par.dy = -par.dy;
 		} else if (par.y <= 10){
+			dpyt += mass * par.dy;
 			par.dy = -par.dy;
 		}
 		par.x = par.x + par.dx;
