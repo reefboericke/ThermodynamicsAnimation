@@ -22,12 +22,17 @@ class particle {
 		}
 }
 
+function addParticle(){
+	particles.push(new Particle(50, 50, Math.floor(Math.random()*21), Math.floor(Math.random()*21))); 
+}
+
 function setup() {
 	createCanvas(canvas_x, canvas_y);
 	particles.push(new particle(50, 50, 20, 5));
 }
 
 function draw() {
+	background(220);
 	for (var i = 0; i < particles.length; i++) {
 		par = particles[i];
 		if(par.x >= canvas_x - 10){
@@ -41,7 +46,6 @@ function draw() {
 		}
 		par.x = par.x + par.dx;
 		par.y = par.y + par.dy;
-		background(220);
 		ellipse(par.x, par.y, 5, 5);
 	}
 }
