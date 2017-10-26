@@ -13,6 +13,7 @@ var pyt = 0;
 var pyb = 0;
 var particles = new Array();
 var startTime = new Date();
+var radius = 20;
 
 class particle {
 		constructor(x, y, dx, dy){
@@ -24,7 +25,11 @@ class particle {
 }
 
 function addParticle(){
-	particles.push(new particle(canvas_x/2, canvas_y/2, Math.floor(Math.random()*21)-10, Math.floor(Math.random()*21)-10)); 
+	particles.push(new particle(canvas_x/2, canvas_y/2, Math.floor(Math.random()*21)-10, Math.floor(Math.random()*21)-10));
+}
+
+function distance(par1, par2){
+		return Math.sqrt((par2.x - par1.x)**2 + (par2.y - par1.y)**2);
 }
 
 function setup() {
@@ -53,13 +58,30 @@ function draw() {
 			dpyt += mass * -par.dy;
 			par.dy = -par.dy;
 		}
+		for (var j =0; j < particles.length; j++){
+				par2 = particles[j];
+				if(j != i){
+					if(distance(par2, par) < radius*2){
+						var kinEng = par.dx**2 + par.dy**2 + par2.dx**2 + par2.dy**2;
+						var ke1 = Math.random()*kinEng*0.75;
+						var pardist = Math.random()*ke1*2 - ke1;
+						par.dx = Math.sqrt(pardist);
+						par.dy = Math.sqrt(ke1 - pardist);
+						var ke2 = kinEng - ke1;
+						var par2dist = Math.random()*ke2*2 - ke2;
+						par2.dx = Math.sqrt(pardist);
+						par2.dy = Math.sqrt(ke2 - pardist);
+					}
+				}
+		}
 		par.x = par.x + par.dx;
 		par.y = par.y + par.dy;
-		ellipse(par.x, par.y, 5, 5);
+		ellipse(par.x, par.y, radius*2, radius*2);
 	}
 	var elapsedTime = time - startTime;
 	document.getElementById("pt").innerHTML=Math.floor(dpyt*100/(elapsedTime*canvas_x))/100;
 	document.getElementById("pb").innerHTML=Math.floor(dpyb*100/(elapsedTime*canvas_x))/100;
 	document.getElementById("pl").innerHTML=Math.floor(dpxl*100/(elapsedTime*canvas_y))/100;
 	document.getElementById("pr").innerHTML=Math.floor(dpxr*100/(elapsedTime*canvas_y))/100;
+	document.getElementById('pressure').innerHTML=(Math.floor(dpyt*100/(elapsedTime*canvas_x))/100+Math.floor(dpyb*100/(elapsedTime*canvas_x))/100+Math.floor(dpxl*100/(elapsedTime*canvas_y))/100+Math.floor(dpxr*100/(elapsedTime*canvas_y))/100)/4
 }
