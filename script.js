@@ -12,6 +12,7 @@ var pxr = 0;
 var pyt = 0;
 var pyb = 0;
 var particles = new Array();
+var startTime = new Date();
 
 class particle {
 		constructor(x, y, dx, dy){
@@ -32,6 +33,7 @@ function setup() {
 }
 
 function draw() {
+	var time = new Date();
 	background(220);
 	for (var i = 0; i < particles.length; i++) {
 		par = particles[i];
@@ -39,17 +41,22 @@ function draw() {
 			dpxr += mass * par.dx;
 			par.dx = -par.dx;
 		} else if (par.x <= 10) {
-			dpxl += mass * par.dx;
+			dpxl += mass * -par.dx;
 			par.dx = -par.dx;
 		} else if (par.y >= canvas_y - 10){
 			dpyb += mass * par.dy;
 			par.dy = -par.dy;
 		} else if (par.y <= 10){
-			dpyt += mass * par.dy;
+			dpyt += mass * -par.dy;
 			par.dy = -par.dy;
 		}
 		par.x = par.x + par.dx;
 		par.y = par.y + par.dy;
 		ellipse(par.x, par.y, 5, 5);
 	}
+	var elapsedTime = time - startTime;
+	document.getElementById("pt").innerHTML=Math.floor(dpyt*100/elapsedTime*canvas_x)/100;
+	document.getElementById("pb").innerHTML=Math.floor(dpyb*100/elapsedTime*canvas_x)/100;
+	document.getElementById("pl").innerHTML=Math.floor(dpxl*100/elapsedTime*canvas_y)/100;
+	document.getElementById("pr").innerHTML=Math.floor(dpxr*100/elapsedTime*canvas_y)/100;
 }
