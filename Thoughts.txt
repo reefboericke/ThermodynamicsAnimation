@@ -1,0 +1,14 @@
+IF OVERLAP
+Check if in collided array
+if not change direction, add to collided array
+
+IF NOT OVERLAP
+check if in collided array
+if it is remove it from array
+
+Are there better checks than loops for this.
+
+pV = 1/3Nm<c^2>
+
+p = k*(Nm<c^2>/V)
+Find K? Should be two, because two dimensions???

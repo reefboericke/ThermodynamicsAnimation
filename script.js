@@ -14,6 +14,7 @@ var pyb = 0;
 var particles = new Array();
 var startTime = new Date();
 var radius = 20;
+var collided = new Array();
 
 class particle {
 		constructor(x, y, dx, dy){
